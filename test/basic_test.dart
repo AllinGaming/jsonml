@@ -39,7 +39,7 @@ void main() {
       expect(
           () => decodeToHtml5Lib(
               json.decode(
-                  r"""["",["NON_EXISTENT_TAG","Title"],["p","First paragraph."],["p","Second paragraph."]]"""),
+                  r"""["",["NON_EXISTENT_TAG","Title"],["p","First paragraph."],["p","Second paragraph."]]""") as Object,
               unsafe: true),
           throwsA(const TypeMatcher<JsonMLFormatException>()));
     });

@@ -15,13 +15,13 @@ class JsonML2DOMBenchmark extends BenchmarkBase {
   // The benchmark code.
   @override
   void run() {
-    destination.nodes.clear();
-    destination.append(decodeToDom(jsonml, unsafe: true));
+    destination?.nodes.clear();
+    destination?.append(decodeToDom(jsonml as Object, unsafe: true));
   }
 
   final String html;
-  DivElement destination;
-  List jsonml;
+  DivElement? destination;
+  List? jsonml;
 
   // Not measured setup code executed prior to the benchmark runs.
   @override
@@ -42,8 +42,8 @@ class JsonML2DOMWithJsonDecodeBenchmark extends BenchmarkBase {
   }
 
   final String html;
-  DivElement destination;
-  String jsonmlJson;
+  late DivElement destination;
+  late String jsonmlJson;
 
   @override
   void setup() {
@@ -59,12 +59,12 @@ class InnerHtmlBenchmark extends BenchmarkBase {
   // The benchmark code.
   @override
   void run() {
-    destination.nodes.clear();
-    destination.innerHtml = html;
+    destination?.nodes.clear();
+    destination?.innerHtml = html;
   }
 
   final String html;
-  DivElement destination;
+  DivElement? destination;
 
   // Not measured setup code executed prior to the benchmark runs.
   @override

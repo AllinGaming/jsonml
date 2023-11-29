@@ -1,9 +1,9 @@
 part of jsonml2dom;
 
 /// The workhorse function.
-Node _createNode(Object jsonMLObject,
+Node _createNode(Object? jsonMLObject,
     {bool unsafe = false,
-    Map<String, CustomTagHandler> customTags,
+    Map<String, CustomTagHandler>? customTags,
     bool svg = false,
     bool allowUnknownTags = false}) {
   if (unsafe == false) {
@@ -20,8 +20,8 @@ Node _createNode(Object jsonMLObject,
   } else if (jsonMLObject is List) {
     assert(jsonMLObject[0] is String);
     var tagName = jsonMLObject[0] as String;
-    Element element;
-    DocumentFragment documentFragment;
+    Element? element;
+    DocumentFragment? documentFragment;
     if (tagName == "svg" || svg) {
       // SVG elements are different, need another constructor.
       element = SvgElement.tag(tagName);
@@ -30,7 +30,7 @@ Node _createNode(Object jsonMLObject,
       documentFragment = DocumentFragment();
     } else {
       if (customTags != null && customTags.containsKey(tagName)) {
-        element = customTags[tagName](jsonMLObject) as Element;
+        element = customTags[tagName]!(jsonMLObject) as Element;
       } else if (!allowUnknownTags &&
           !VALID_TAGS.contains(tagName.toLowerCase())) {
         throw JsonMLFormatException("Tag '$tagName' not a valid HTML5 tag "
@@ -62,7 +62,8 @@ Node _createNode(Object jsonMLObject,
         if (element != null) {
           element.append(newNode);
         } else {
-          documentFragment.append(newNode);
+          documentFragment?.append(newNode);
+          // documentFragment.append(newNode);
         }
       }
     }
@@ -70,7 +71,7 @@ Node _createNode(Object jsonMLObject,
       node = element;
     } else {
       assert(documentFragment != null);
-      node = documentFragment;
+      node = documentFragment as Node;
     }
   } else {
     throw JsonMLFormatException("Unexpected JsonML object. Objects in "
